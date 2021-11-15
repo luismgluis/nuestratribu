@@ -8,7 +8,7 @@ const app = new App();
 const port = 5000;
 
 appServer.get("/", (req, res) => {
-  res.send("Server state = enabled");
+  res.send("Server state = enabled....🍖ssssasda sdasdasd");
 });
 
 appServer.get("/getAdmin", function (req, res) {
@@ -28,6 +28,11 @@ appServer.get("/getAdmin", function (req, res) {
       console.log("Fail");
       res.send(err);
     });
+});
+appServer.post("/addAdmin", function (req, res) {
+  const data: any = req.body;
+  console.log(data);
+  res.send("ok");
 });
 
 appServer.post("/post", function (req, res) {

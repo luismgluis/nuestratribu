@@ -8,9 +8,12 @@
     "esModuleInterop": true,
   },
   "include": [
-    "*.ts"
+    "*.ts",
+    "src/*.ts",
+    "index.ts"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "**/*.spec.ts"
   ]
 }

@@ -14,16 +14,16 @@ class ApiDatabase {
   async addAdmin(adminInfo: Admin) {
     const that = this;
     try {
-      // const db = that.app.firestore;
-      // const dataToUpload = adminInfo.exportToUpload();
-
-      // const docRef = await addDoc(collection(db, "admins"), dataToUpload);
-
-      // if (docRef) {
-      //   //doc is uploaded
-      //   return docRef.id;
-      // }
-      throw new Error("Fail to upload data");
+      const db = that.app.firestore;
+      const docSnap = await db
+        .collection("admins")
+        .doc(adminInfo.id)
+        .set(adminInfo.exportToUpload());
+      if (docSnap) {
+        return true;
+      }
+      return false;
+      // throw new Error("Fail to upload data");
     } catch (error) {
       throw new Error(error);
     }

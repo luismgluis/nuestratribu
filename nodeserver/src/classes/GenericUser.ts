@@ -1,12 +1,22 @@
 import User, { UserInterface } from "./User";
 
-class GenericUser extends User {
-  age: number;
+export interface GenericUserInterface extends User {
   gender: string;
-  constructor(data: UserInterface) {
+  idCard: string;
+  backupPhoneNumber: string;
+  rhGroup: string;
+}
+class GenericUser extends User implements GenericUserInterface {
+  backupPhoneNumber: string;
+  idCard: string;
+  rhGroup: string;
+  gender: string;
+  constructor(data: GenericUserInterface | null) {
     super(data);
-    this.age = 0;
-    this.gender = "";
+    this.rhGroup = data?.rhGroup || "";
+    this.idCard = data?.idCard || "";
+    this.backupPhoneNumber = data?.backupPhoneNumber || "";
+    this.gender = data?.gender || "";
   }
   exportToUpload() {
     const newObjectToUpload = {
@@ -16,6 +26,10 @@ class GenericUser extends User {
       secondSurname: this.secondSurname,
       phoneNumber: this.phoneNumber,
       address: this.address,
+      backupPhoneNumber: this.backupPhoneNumber,
+      idCard: this.idCard,
+      rhGroup: this.rhGroup,
+      gender: this.gender,
     };
     return newObjectToUpload;
   }
