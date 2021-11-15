@@ -10,7 +10,7 @@ class GenericUser extends User {
   }
 }
 
-const generalPopulation = new GenericUser({
+const generalUser = new GenericUser({
   firstName: "pepe",
   middleName: "leo",
   lastName: "Rincón",
@@ -18,10 +18,10 @@ const generalPopulation = new GenericUser({
   phoneNumber: 123456789,
   direction: "Calle 5",
 });
-generalPopulation.age = 24;
-generalPopulation.gender = "M";
+generalUser.age = 24;
+generalUser.gender = "M";
 
-console.log(generalPopulation.age);
-console.log(generalPopulation.gender);
+console.log(generalUser.age);
+console.log(generalUser.gender);
 
 export default GenericUser;

@@ -3,3 +3,5 @@
 
 # Exclude dependencies
 node_modules/
+
+firebaseKey.json

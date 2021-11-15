@@ -45,3 +45,5 @@ Deploy to App Engine Flexible by [modifying `app.yaml`][app_yaml].
 [app_yaml]: https://cloud.google.com/appengine/docs/flexible/nodejs/configuring-your-app-with-app-yaml
 [tutorial]: https://cloud.google.com/appengine/docs/standard/nodejs/quickstart
 [contributing]: https://github.com/GoogleCloudPlatform/nodejs-docs-samples/blob/main/CONTRIBUTING.md
+
+$env:GOOGLE_APPLICATION_CREDENTIALS="C:\Users\ASTRID\Downloads\nuestra-tribu-firebase-adminsdk-2ibcz-465fcdf6e3.json"
