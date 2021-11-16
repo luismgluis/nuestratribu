@@ -1,12 +1,12 @@
 import { createTheme } from "@mui/material";
-import { red, indigo } from "@mui/material/colors";
+import { amber, indigo } from "@mui/material/colors";
 const ThemeConfig = createTheme({
   palette: {
     primary: {
-      main: indigo["A700"],
+      main: indigo["700"],
     },
     secondary: {
-      main: red["A400"],
+      main: amber["700"],
     },
   },
 });

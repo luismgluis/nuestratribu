@@ -14,6 +14,12 @@ class Admin extends User implements AdminInterface {
     this.permissionLevel = data?.permissionLevel || 0;
     this.validation = data?.validation || false;
   }
+  isEmpty() {
+    if (this.firstName == "") {
+      return true;
+    }
+    return false;
+  }
   exportToUpload() {
     const newObjectToUpload = {
       firstName: this.firstName,
@@ -26,6 +32,7 @@ class Admin extends User implements AdminInterface {
       idBusiness: this.idBusiness,
       permissionLevel: this.permissionLevel,
       validation: this.validation,
+      creationDate: this.creationDate,
     };
     return newObjectToUpload;
   }

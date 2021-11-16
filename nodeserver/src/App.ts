@@ -16,31 +16,11 @@ class App {
     this._fireApp = null;
   }
   start() {
-    // const config: any = {
-    //   credential: admin.credential.cert(<any>firebaseKey),
-    //   databaseURL: "https://nuestra-tribu-default-rtdb.firebaseio.com",
-    // };
-    // const params = {
-    //   //clone json object into new object to make typescript happy
-    //   type: firebaseKey.type,
-    //   projectId: firebaseKey.project_id,
-    //   privateKeyId: firebaseKey.private_key_id,
-    //   privateKey: firebaseKey.private_key,
-    //   clientEmail: firebaseKey.client_email,
-    //   clientId: firebaseKey.client_id,
-    //   authUri: firebaseKey.auth_uri,
-    //   tokenUri: firebaseKey.token_uri,
-    //   authProviderX509CertUrl: firebaseKey.auth_provider_x509_cert_url,
-    //   clientC509CertUrl: firebaseKey.client_x509_cert_url,
-    // };
-
     const firebaseAdmin = admin.initializeApp({
       credential: admin.credential.cert(firebaseKey as admin.ServiceAccount),
     });
 
     this._fireApp = firebaseAdmin;
-    // this._fireApp = initializeApp(params);
-
     this._database = new ApiDatabase(this);
 
     this.started = true;

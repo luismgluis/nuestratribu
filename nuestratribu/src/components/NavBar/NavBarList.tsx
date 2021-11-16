@@ -9,11 +9,15 @@ import {
   Collapse,
   styled,
   Divider,
+  Box,
 } from "@mui/material";
-import SendIcon from "@mui/icons-material/Send";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import DraftsIcon from "@mui/icons-material/Drafts";
-import useMobile from "../../hooks/useMobile/useMobile";
+//import SendIcon from "@mui/icons-material/Send";
+
+//import DraftsIcon from "@mui/icons-material/Drafts";
+import useMobile from "../../hooks/useMobile";
+import PersonSearchIcon from "@mui/icons-material/PersonSearch";
+import PersonAddIcon from "@mui/icons-material/PersonAdd";
+import { useSetHomeGoTo } from "../../hooks/useHomeGoTo";
 
 const TAG = "NAVBAR LIST";
 
@@ -35,7 +39,7 @@ const NavBarList: React.FC<NavBarListProps> = ({ prop1 }) => {
     setOpen(!open);
   };
   const isMobile = useMobile();
-
+  const setHomeGoTo = useSetHomeGoTo();
   return (
     <List
       sx={{
@@ -48,27 +52,46 @@ const NavBarList: React.FC<NavBarListProps> = ({ prop1 }) => {
       aria-labelledby="nested-list-subheader"
       subheader={
         <div>
-          <MyThemeSpacingDiv></MyThemeSpacingDiv>
+          <MyThemeSpacingDiv>
+            <Box
+              sx={{
+                alignContent: "center",
+                justifyContent: "center",
+                display: "flex",
+                margin: "10px 0px 0px 10px",
+              }}
+            >
+              <img
+                height="100"
+                width="80%"
+                src="https://firebasestorage.googleapis.com/v0/b/nuestra-tribu.appspot.com/o/pp.svg?alt=media&token=63f48e86-56fa-42b0-a46a-b746f532e3ab"
+                alt="App icon"
+              ></img>
+            </Box>
+          </MyThemeSpacingDiv>
           <Divider />
         </div>
       }
     >
       <ListSubheader component="div" id="nested-list-subheader">
-        Nested List Items
+        Herramientas
       </ListSubheader>
-      <ListItemButton>
+
+      <ListItemButton onClick={() => setHomeGoTo("SearchUsers")}>
         <ListItemIcon>
-          <SendIcon />
+          <PersonSearchIcon />
         </ListItemIcon>
-        <ListItemText primary="Sent mail" />
+        <ListItemText primary="Consultar usuario" />
       </ListItemButton>
-      <ListItemButton>
+
+      <ListItemButton onClick={() => setHomeGoTo("AddUser")}>
         <ListItemIcon>
-          <DraftsIcon />
+          <PersonAddIcon />
         </ListItemIcon>
-        <ListItemText primary="Drafts" />
+        <ListItemText primary="Agregar usuario" />
       </ListItemButton>
-      <ListItemButton onClick={handleClick}>
+
+      {/* <ListItemButton onClick={handleClick}>
         <ListItemIcon>
           <InboxIcon />
         </ListItemIcon>
@@ -84,7 +107,7 @@ const NavBarList: React.FC<NavBarListProps> = ({ prop1 }) => {
             <ListItemText primary="Starred" />
           </ListItemButton>
         </List>
-      </Collapse>
+      </Collapse> */}
     </List>
   );
 };

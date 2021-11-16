@@ -5,11 +5,14 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "type": "pwa-node",
-      "request": "launch",
+      "type": "node",
+      "request": "attach",
       "name": "Launch Program",
+      "port": 5858,
+      "preLaunchTask": "tsc: build - tsconfig.json",
+      "restart": true,
       "skipFiles": [
-        "<node_internals>/**"
+        "node_modules/**"
       ],
       "program": "${workspaceFolder}\\dist\\index.js",
       "outFiles": [

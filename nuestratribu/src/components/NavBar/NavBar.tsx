@@ -11,11 +11,14 @@ import {
   Toolbar,
   Typography,
   useTheme,
+  Avatar,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 
 import LocationOnIcon from "@mui/icons-material/LocationOn";
-import useMobile from "../../hooks/useMobile/useMobile";
+import useMobile from "../../hooks/useMobile";
+import { useHomeGoTo } from "../../hooks/useHomeGoTo";
+import CustomAvatar from "./CustomAvatar";
 
 const TAG = "NAV BAR";
 type NavBarProps = {
@@ -39,18 +42,36 @@ const NavBar: React.FC<NavBarProps> = ({ onOpenMenu, menuOpened }) => {
     return theme.palette.getContrastText(theme.palette.primary.main);
   }, [theme]);
 
+  const homeGoTo = useHomeGoTo();
+
+  const nameScreen = useMemo(() => {
+    switch (homeGoTo.screen) {
+      case "EditUser":
+        return "Editar Usuario";
+
+      case "InfoUser":
+        return "Informacion del Usuario";
+
+      case "SearchUsers":
+        return "Busqueda de usuarios";
+
+      default:
+        break;
+    }
+  }, [homeGoTo]);
   return (
     <React.Fragment>
-      <Box sx={{ flexGrow: 1, position: "fixed", width: "100%", bottom: 0 }}>
+      <Box
+        sx={{
+          flexGrow: 1,
+          position: "fixed",
+          width: "100%",
+          bottom: 0,
+          zIndex: 99,
+        }}
+      >
         {isMobile && (
-          <BottomNavigation
-            showLabels
-            // value={value}
-            // onChange={(event, newValue) => {
-            //   setValue(newValue);
-            // }}
-            sx={{ bgcolor: "primary.main" }}
-          >
+          <BottomNavigation showLabels sx={{ bgcolor: "primary.main" }}>
             <BottomNavigationAction
               onClick={onOpenMenu}
               icon={
@@ -58,16 +79,9 @@ const NavBar: React.FC<NavBarProps> = ({ onOpenMenu, menuOpened }) => {
               }
             />
             <Button fullWidth variant="contained" disableElevation>
-              Hola
+              {nameScreen}
             </Button>
-            <BottomNavigationAction
-              label={
-                <Typography variant="caption" color="HighlightText">
-                  Hola
-                </Typography>
-              }
-              icon={<LocationOnIcon htmlColor={contrastColorPrimary} />}
-            />
+            <BottomNavigationAction icon={<CustomAvatar />} />
           </BottomNavigation>
         )}
         {!isMobile && (
@@ -92,9 +106,11 @@ const NavBar: React.FC<NavBarProps> = ({ onOpenMenu, menuOpened }) => {
                 <MenuIcon />
               </IconButton>
               <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                News
+                {nameScreen}
               </Typography>
-              <Button color="inherit">Login</Button>
+
+              {/* <Avatar alt="Cindy Baker" src="/static/images/avatar/3.jpg" /> */}
+              <CustomAvatar />
             </Toolbar>
           </AppBar>
         )}

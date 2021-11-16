@@ -9,6 +9,7 @@ export interface UserInterface {
   email: string;
   age: number;
   gender: string;
+  creationDate: number;
 }
 
 class User implements UserInterface {
@@ -22,6 +23,7 @@ class User implements UserInterface {
   address: string;
   email: string;
   age: number;
+  creationDate: number;
   constructor(data: UserInterface | null) {
     this.id = data?.id || "";
     this.firstName = data?.firstName || "";
@@ -33,6 +35,7 @@ class User implements UserInterface {
     this.email = data?.email || "";
     this.gender = data?.gender || "";
     this.age = data?.age || 0;
+    this.creationDate = data?.creationDate || 0;
   }
 }
 export default User;

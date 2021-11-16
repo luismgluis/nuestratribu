@@ -1,24 +1,49 @@
 import App from "../../App";
 import Admin from "../../classes/Admin";
-import { collection, doc, setDoc, addDoc, getDoc } from "firebase/firestore";
+import Business from "../../classes/Business";
+import BusinessPost from "../../classes/BusinessPost";
+import GenericUser from "../../classes/GenericUser";
+import ApiBusiness from "./ApiBusiness";
+import ApiAdmin from "./ApiAdmin";
 
 class ApiDatabase {
   app: App;
+  business: ApiBusiness;
+  admin: ApiAdmin;
   constructor(app: App) {
     this.app = app;
+    this.business = new ApiBusiness(app);
   }
-  addGenericUser() {}
-  removeGenericUser() {}
-  removeAdmin() {}
 
-  async addAdmin(adminInfo: Admin) {
+  //end addbusiness
+  // addGenericUser
+  async addGenericUser(GenericUserInfo: GenericUser) {
     const that = this;
     try {
       const db = that.app.firestore;
       const docSnap = await db
-        .collection("admins")
-        .doc(adminInfo.id)
-        .set(adminInfo.exportToUpload());
+        .collection("genericusers")
+        .add(GenericUserInfo.exportToUpload());
+
+      if (docSnap) {
+        return true;
+      }
+      return false;
+      // throw new Error("Fail to upload data");
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+  // end GenericUser
+
+  async addBusinessPost(businessPost: BusinessPost) {
+    const that = this;
+    try {
+      const db = that.app.firestore;
+      const docSnap = await db
+        .collection("businessPosts")
+        .add(businessPost.exportToUpload());
+
       if (docSnap) {
         return true;
       }
@@ -29,44 +54,43 @@ class ApiDatabase {
     }
   }
 
-  async getAdmin(idAdmin: string) {
+  async getBusssinessPost(idPost: string) {
     const that = this;
     try {
       const db = that.app.firestore;
-      const docSnap = await db.collection("admins").doc(idAdmin).get();
+      const docSnap = await db.collection("businessPosts").doc(idPost).get();
 
       if (docSnap.exists) {
         //doc is read
         const data: any = docSnap.data();
-        const newadmin = new Admin(data);
-        return newadmin;
+        data.id = docSnap.id;
+        const newData = new BusinessPost(data);
+        return newData;
       }
       throw new Error("Fail to upload data");
     } catch (error) {
       throw new Error(error);
     }
   }
-  getAdminInfo() {}
-  getAllAdmins() {
+
+  async getGenericUser(idUser: string) {
     const that = this;
     try {
-      return [];
+      const db = that.app.firestore;
+      const docSnap = await db.collection("genericusers").doc(idUser).get();
+
+      if (docSnap.exists) {
+        //doc is read
+        const data: any = docSnap.data();
+        data.id = docSnap.id;
+        const newData = new GenericUser(data);
+        return newData;
+      }
+      throw new Error("Fail to upload data");
     } catch (error) {
-      throw new Error("");
+      throw new Error(error);
     }
   }
-  getStaticUser() {
-    console.log("devolver todos lo users");
-    return ["pepe", "pablo"];
-  }
-  getAllUsers() {
-    return new Promise<string[]>((resolve, reject) => {
-      try {
-        resolve(["pepe", "pablo"]);
-      } catch (error) {
-        reject(null);
-      }
-    });
-  }
 }
+
 export default ApiDatabase;

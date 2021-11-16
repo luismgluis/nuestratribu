@@ -1,27 +1,67 @@
 import User, { UserInterface } from "./User";
 
-class GenericUser extends User {
-  age: number;
+export interface GenericUserInterface extends User {
   gender: string;
-  constructor(data: UserInterface) {
+  idCard: string;
+  idBusiness: string;
+  backupPhoneNumber: string;
+  rhGroup: string;
+}
+class GenericUser extends User implements GenericUserInterface {
+  backupPhoneNumber: string;
+  idCard: string;
+  idBusiness: string;
+  rhGroup: string;
+  gender: string;
+  constructor(data: GenericUserInterface | null) {
     super(data);
-    this.age = 0;
-    this.gender = "";
+    this.rhGroup = data?.rhGroup || "";
+    this.idCard = data?.idCard || "";
+    this.backupPhoneNumber = data?.backupPhoneNumber || "";
+    this.gender = data?.gender || "";
+    this.idBusiness = data?.idBusiness || "";
+  }
+  isEmpty() {
+    if (
+      this.firstName == "" &&
+      this.backupPhoneNumber == "" &&
+      this.idCard == ""
+    ) {
+      return true;
+    }
+    return false;
+  }
+  exportToUpload() {
+    const newObjectToUpload = {
+      firstName: this.firstName,
+      middleName: this.middleName,
+      lastName: this.lastName,
+      secondSurname: this.secondSurname,
+      phoneNumber: this.phoneNumber,
+      address: this.address,
+      backupPhoneNumber: this.backupPhoneNumber,
+      idCard: this.idCard,
+      rhGroup: this.rhGroup,
+      gender: this.gender,
+      creationDate: this.creationDate,
+      idBusiness: this.idBusiness,
+    };
+    return newObjectToUpload;
   }
 }
 
-const generalUser = new GenericUser({
-  firstName: "pepe",
-  middleName: "leo",
-  lastName: "Rincón",
-  secondSurname: "Serna",
-  phoneNumber: 123456789,
-  direction: "Calle 5",
-});
-generalUser.age = 24;
-generalUser.gender = "M";
+// const generalUser = new GenericUser({
+//   firstName: "pepe",
+//   middleName: "leo",
+//   lastName: "Rincón",
+//   secondSurname: "Serna",
+//   phoneNumber: 123456789,
+//   direction: "Calle 5",
+// });
+// generalUser.age = 24;
+// generalUser.gender = "M";
 
-console.log(generalUser.age);
-console.log(generalUser.gender);
+// console.log(generalUser.age);
+// console.log(generalUser.gender);
 
 export default GenericUser;

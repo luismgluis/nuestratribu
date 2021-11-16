@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { SwipeableDrawer } from "@mui/material";
 import NavBarList from "./NavBarList";
-import useMobile from "../../hooks/useMobile/useMobile";
+import useMobile from "../../hooks/useMobile";
 const TAG = "NAVBAR DRAWER";
 type NavBarDrawerProps = {
   open?: boolean;

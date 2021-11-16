@@ -1,5 +1,5 @@
 import "./Login.scss";
-import React from "react";
+import React, { useEffect } from "react";
 import { Copyright } from "@mui/icons-material";
 import {
   Grid,
@@ -16,7 +16,9 @@ import {
 } from "@mui/material";
 
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import useBreackpoints from "../../hooks/useBreackpoints/useBreackpoints";
+import useBreackpoints from "../../hooks/useBreackpoints";
+import { useCurrentUser } from "../../hooks/currentUser";
+import { useNavigate } from "react-router";
 
 const TAG = "LOGIN";
 type LoginProps = {
@@ -24,6 +26,7 @@ type LoginProps = {
 };
 const Login: React.FC<LoginProps> = ({ prop1 }) => {
   console.log(TAG, "render");
+  const navigate = useNavigate();
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -34,8 +37,14 @@ const Login: React.FC<LoginProps> = ({ prop1 }) => {
       password: data.get("password"),
     });
   };
-  const breakXS = useBreackpoints("xs");
+  const me = useCurrentUser();
 
+  console.log(TAG, me);
+  useEffect(() => {
+    if (!me.isEmpty()) {
+      navigate("/home");
+    }
+  }, [me, navigate]);
   return (
     <div className="Login">
       <Grid container component="main" sx={{ height: "100vh" }}>
@@ -108,17 +117,17 @@ const Login: React.FC<LoginProps> = ({ prop1 }) => {
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
               >
-                Sign In
+                Ingresar
               </Button>
               <Grid container>
                 <Grid item xs>
                   <Link href="#" variant="body2">
-                    Forgot password?
+                    Olvidé mi contraseña?
                   </Link>
                 </Grid>
                 <Grid item>
-                  <Link href="#" variant="body2">
-                    {"Don't have an account? Sign Up"}
+                  <Link href="/CreateAccount" variant="body2">
+                    {"No tengo una cuenta"}
                   </Link>
                 </Grid>
               </Grid>

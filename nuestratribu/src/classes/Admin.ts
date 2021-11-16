@@ -1,24 +1,43 @@
 import User, { UserInterface } from "./User";
-
-class Admin extends User {
-  permissions: Array<string>;
+export interface AdminInterface extends User {
+  permissionLevel: number;
   validation: boolean;
-  constructor(data: UserInterface) {
+  idBusiness: string;
+}
+class Admin extends User implements AdminInterface {
+  validation: boolean;
+  idBusiness: string;
+  permissionLevel: number;
+  constructor(data: AdminInterface | null) {
     super(data);
-    this.permissions = [];
-    this.validation = false;
+    this.idBusiness = data?.idBusiness || "";
+    this.permissionLevel = data?.permissionLevel || 0;
+    this.validation = data?.validation || false;
+  }
+  isEmpty() {
+    if (this.firstName === "") {
+      return true;
+    }
+    return false;
+  }
+  exportToUpload() {
+    const newObjectToUpload = {
+      firstName: this.firstName,
+      middleName: this.middleName,
+      lastName: this.lastName,
+      secondSurname: this.secondSurname,
+      phoneNumber: this.phoneNumber,
+      address: this.address,
+      email: this.email,
+      idBusiness: this.idBusiness,
+      permissionLevel: this.permissionLevel,
+      validation: this.validation,
+      creationDate: this.creationDate,
+    };
+    return newObjectToUpload;
   }
 }
 
-const admin = new Admin({
-  firstName: "Juan",
-  middleName: "José",
-  lastName: "Lopez",
-  secondSurname: "Suarez",
-  phoneNumber: 3001234567,
-  direction: "Calle 12 # 32 - 29",
-});
-admin.permissions = ["ss", "asda"];
-admin.validation = true;
-
 export default Admin;
+
+// niveles: 0: ver, 1: subir, 2: editar, 3: nuevos usuarios

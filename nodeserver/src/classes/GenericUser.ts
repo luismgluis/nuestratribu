@@ -3,12 +3,14 @@ import User, { UserInterface } from "./User";
 export interface GenericUserInterface extends User {
   gender: string;
   idCard: string;
+  idBusiness: string;
   backupPhoneNumber: string;
   rhGroup: string;
 }
 class GenericUser extends User implements GenericUserInterface {
   backupPhoneNumber: string;
   idCard: string;
+  idBusiness: string;
   rhGroup: string;
   gender: string;
   constructor(data: GenericUserInterface | null) {
@@ -17,6 +19,17 @@ class GenericUser extends User implements GenericUserInterface {
     this.idCard = data?.idCard || "";
     this.backupPhoneNumber = data?.backupPhoneNumber || "";
     this.gender = data?.gender || "";
+    this.idBusiness = data?.idBusiness || "";
+  }
+  isEmpty() {
+    if (
+      this.firstName == "" &&
+      this.backupPhoneNumber == "" &&
+      this.idCard == ""
+    ) {
+      return true;
+    }
+    return false;
   }
   exportToUpload() {
     const newObjectToUpload = {
@@ -30,6 +43,8 @@ class GenericUser extends User implements GenericUserInterface {
       idCard: this.idCard,
       rhGroup: this.rhGroup,
       gender: this.gender,
+      creationDate: this.creationDate,
+      idBusiness: this.idBusiness,
     };
     return newObjectToUpload;
   }
