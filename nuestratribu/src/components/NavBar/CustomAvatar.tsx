@@ -1,6 +1,6 @@
 // import "./CustomAvatar.scss";
 import React, { useMemo, useState } from "react";
-import { Stack, Avatar } from "@mui/material";
+import { Stack, Avatar, IconButton } from "@mui/material";
 import { deepOrange } from "@mui/material/colors";
 import CustomList from "./CustomList";
 import { useCurrentUser } from "../../hooks/currentUser";
@@ -37,13 +37,20 @@ const CustomAvatar: React.FC<CustomAvatarProps> = ({ prop1 }) => {
           setMenuVisible(true);
         }}
       >
-        <Avatar
-          sx={{ bgcolor: deepOrange[500] }}
-          alt="Remy Sharp"
-          src="/broken-image.jpg"
+        <IconButton
+          color="primary"
+          aria-label="upload picture"
+          component="span"
         >
-          {initials}
-        </Avatar>
+          <Avatar
+            sx={{ bgcolor: deepOrange[500] }}
+            alt="Remy Sharp"
+            src="/broken-image.jpg"
+          >
+            {initials}
+          </Avatar>
+        </IconButton>
+
         <CustomList
           isVisible={menuVisible}
           onClose={() => setMenuVisible(false)}
