@@ -15,10 +15,8 @@ function App() {
       <CssBaseline />
       <BrowserRouter>
         <Routes>
-          <Route path="/home" element={<Home />} />
-
           <Route
-            path="/homep"
+            path="/home"
             element={
               <PrivateRoute>
                 <Home />
@@ -38,8 +36,8 @@ function App() {
           <Route
             path="*"
             element={
-              <PrivateRoute>
-                <Home />
+              <PrivateRoute disableValidation>
+                <Login />
               </PrivateRoute>
             }
           />

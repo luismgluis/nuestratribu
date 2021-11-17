@@ -15,7 +15,11 @@ export function useCurrentUser() {
       if (!utils.objects.isEmpty(newUser)) {
         if (!newUser.isEmpty()) {
           if (user.id !== newUser.id) {
-            setUser(new User(newUser.exportToObject()));
+            if (newUser instanceof User) {
+              setUser(newUser);
+            } else {
+              setUser(new User(newUser));
+            }
           }
         }
         return new User(newUser);

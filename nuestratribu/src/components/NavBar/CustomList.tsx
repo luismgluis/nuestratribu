@@ -1,7 +1,9 @@
 // import "./CustomList.scss";
-import React, { useEffect, useState } from "react";
-import { Menu, MenuItem } from "@mui/material";
+import React, { useCallback, useEffect, useState } from "react";
+import { Divider, Menu, MenuItem } from "@mui/material";
 import useMobile from "../../hooks/useMobile";
+import { Box } from "@mui/system";
+import { useCurrentUser } from "../../hooks/currentUser";
 
 type CustomListProps = {
   isVisible: boolean;
@@ -11,12 +13,15 @@ const CustomList: React.FC<CustomListProps> = ({
   isVisible = false,
   onClose,
 }) => {
+  const me = useCurrentUser();
   const [open, setOpen] = useState(false);
   const isMobile = useMobile();
-  const handleClose = () => {
-    setOpen(false);
+
+  const handleClose = useCallback(() => {
+    console.log("err");
+    // setOpen(false);
     onClose();
-  };
+  }, [onClose]);
 
   useEffect(() => {
     setOpen(isVisible);
@@ -36,8 +41,12 @@ const CustomList: React.FC<CustomListProps> = ({
         horizontal: "right",
       }}
       open={open}
-      onClose={handleClose}
+      onClose={() => handleClose()}
     >
+      <Box marginX={3} py={2}>
+        Hola, {me.firstName}
+      </Box>
+      <Divider />
       <MenuItem onClick={handleClose}>Editar perfil</MenuItem>
       <MenuItem onClick={handleClose}>Salir</MenuItem>
     </Menu>

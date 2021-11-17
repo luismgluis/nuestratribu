@@ -1,5 +1,5 @@
 import "./Login.scss";
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Copyright } from "@mui/icons-material";
 import {
   Grid,
@@ -16,9 +16,9 @@ import {
 } from "@mui/material";
 
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import useBreackpoints from "../../hooks/useBreackpoints";
 import { useCurrentUser } from "../../hooks/currentUser";
 import { useNavigate } from "react-router";
+import Api from "../../api/Api";
 
 const TAG = "LOGIN";
 type LoginProps = {
@@ -27,7 +27,7 @@ type LoginProps = {
 const Login: React.FC<LoginProps> = ({ prop1 }) => {
   console.log(TAG, "render");
   const navigate = useNavigate();
-
+  const [form, setForm] = useState({ email: "", pass: "" });
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -45,6 +45,11 @@ const Login: React.FC<LoginProps> = ({ prop1 }) => {
       navigate("/home");
     }
   }, [me, navigate]);
+
+  const loginAction = useCallback(() => {
+    Api.app.loginWithEmail(form.email, form.pass);
+  }, [form]);
+
   return (
     <div className="Login">
       <Grid container component="main" sx={{ height: "100vh" }}>
@@ -75,11 +80,11 @@ const Login: React.FC<LoginProps> = ({ prop1 }) => {
               alignItems: "center",
             }}
           >
-            <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+            <Avatar sx={{ m: 1, bgcolor: "secondary.main" }} src="">
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
-              Sign in
+              Inicia Sesión
             </Typography>
             <Box
               component="form"
@@ -96,6 +101,10 @@ const Login: React.FC<LoginProps> = ({ prop1 }) => {
                 name="email"
                 autoComplete="email"
                 autoFocus
+                value={form.email}
+                onChange={(e) =>
+                  setForm({ ...form, email: e.currentTarget.value })
+                }
               />
               <TextField
                 margin="normal"
@@ -106,19 +115,26 @@ const Login: React.FC<LoginProps> = ({ prop1 }) => {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                value={form.pass}
+                onChange={(e) =>
+                  setForm({ ...form, pass: e.currentTarget.value })
+                }
               />
               <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
+                label="Recuerdame"
               />
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-              >
-                Ingresar
-              </Button>
+              <Box sx={{ mx: "25%" }}>
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2 }}
+                  onClick={() => loginAction()}
+                >
+                  Ingresar
+                </Button>
+              </Box>
               <Grid container>
                 <Grid item xs>
                   <Link href="#" variant="body2">
@@ -131,7 +147,11 @@ const Login: React.FC<LoginProps> = ({ prop1 }) => {
                   </Link>
                 </Grid>
               </Grid>
-              <Copyright sx={{ mt: 5 }} />
+              <Box sx={{ mt: 5 }}>
+                <Typography variant="caption" color="primary">
+                  <Copyright /> Nuestra Tribu 2021
+                </Typography>
+              </Box>
             </Box>
           </Box>
         </Grid>

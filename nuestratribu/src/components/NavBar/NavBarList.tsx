@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { ExpandLess, ExpandMore, StarBorder } from "@mui/icons-material";
 import {
   List,
@@ -18,6 +18,7 @@ import useMobile from "../../hooks/useMobile";
 import PersonSearchIcon from "@mui/icons-material/PersonSearch";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import { useSetHomeGoTo } from "../../hooks/useHomeGoTo";
+import { HomeCurrentScreen } from "../Home/HomeCurrentScreen";
 
 const TAG = "NAVBAR LIST";
 
@@ -27,19 +28,21 @@ const MyThemeSpacingDiv = styled("div")(({ theme }) => ({
 }));
 
 type NavBarListProps = {
-  prop1?: any;
+  onSelect?: () => void;
 };
 
-const NavBarList: React.FC<NavBarListProps> = ({ prop1 }) => {
+const NavBarList: React.FC<NavBarListProps> = ({ onSelect }) => {
   console.log(TAG, "render");
 
-  const [open, setOpen] = React.useState(true);
-
-  const handleClick = () => {
-    setOpen(!open);
-  };
   const isMobile = useMobile();
   const setHomeGoTo = useSetHomeGoTo();
+  const customGoto = useCallback(
+    (screen: HomeCurrentScreen) => {
+      setHomeGoTo(screen);
+      if (onSelect) onSelect();
+    },
+    [setHomeGoTo, onSelect]
+  );
   return (
     <List
       sx={{
@@ -77,14 +80,14 @@ const NavBarList: React.FC<NavBarListProps> = ({ prop1 }) => {
         Herramientas
       </ListSubheader>
 
-      <ListItemButton onClick={() => setHomeGoTo("SearchUsers")}>
+      <ListItemButton onClick={() => customGoto("SearchUsers")}>
         <ListItemIcon>
           <PersonSearchIcon />
         </ListItemIcon>
         <ListItemText primary="Consultar usuario" />
       </ListItemButton>
 
-      <ListItemButton onClick={() => setHomeGoTo("AddUser")}>
+      <ListItemButton onClick={() => customGoto("AddUser")}>
         <ListItemIcon>
           <PersonAddIcon />
         </ListItemIcon>

@@ -4,9 +4,13 @@ import Api from "../../api/Api";
 import { useCurrentUser, useSetCurrentUser } from "../../hooks/currentUser";
 const TAG = "PRIVATE ROUTE";
 type PrivateRouteProps = {
+  disableValidation?: boolean;
   children?: any;
 };
-const PrivateRoute: React.FC<PrivateRouteProps> = ({ children }) => {
+const PrivateRoute: React.FC<PrivateRouteProps> = ({
+  children,
+  disableValidation,
+}) => {
   console.log(TAG, "render");
   const navigate = useNavigate();
   const me = useCurrentUser();
@@ -37,7 +41,11 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({ children }) => {
     }
   }, [me, setMe, navigate]);
 
-  return <React.Fragment>{children}</React.Fragment>;
+  return (
+    <React.Fragment>
+      {(disableValidation || !me.isEmpty()) && children}
+    </React.Fragment>
+  );
 };
 
 export default PrivateRoute;

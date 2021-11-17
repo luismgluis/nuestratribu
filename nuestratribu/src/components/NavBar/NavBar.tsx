@@ -19,6 +19,7 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import useMobile from "../../hooks/useMobile";
 import { useHomeGoTo } from "../../hooks/useHomeGoTo";
 import CustomAvatar from "./CustomAvatar";
+import { useCurrentUser } from "../../hooks/currentUser";
 
 const TAG = "NAV BAR";
 type NavBarProps = {
@@ -55,10 +56,13 @@ const NavBar: React.FC<NavBarProps> = ({ onOpenMenu, menuOpened }) => {
       case "SearchUsers":
         return "Busqueda de usuarios";
 
+      case "AddUser":
+        return "Añadir usuarios";
       default:
         break;
     }
   }, [homeGoTo]);
+
   return (
     <React.Fragment>
       <Box

@@ -9,7 +9,6 @@ type SearchProfileTable = {
 };
 const SearchProfileTable: React.FC<SearchProfileTable> = ({ usersList }) => {
   console.log(TAG, "render");
-
   const rows = usersList.map((user) => ({
     id: user.idCard,
     firstName: user.firstName,

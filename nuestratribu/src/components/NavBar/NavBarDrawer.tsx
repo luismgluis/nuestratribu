@@ -48,7 +48,7 @@ const NavBarDrawer: React.FC<NavBarDrawerProps> = ({ open, onClose }) => {
       onClose={() => toggleDrawer(false)}
       onOpen={() => toggleDrawer(true)}
     >
-      <NavBarList />
+      <NavBarList onSelect={() => toggleDrawer(false)} />
     </SwipeableDrawer>
   );
 };
